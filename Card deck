@@ -1,0 +1,57 @@
+#include <iostream>
+#include <algorithm>
+#include <string>
+#include <vector>
+#include <deque>
+#include <stack>
+#include <cmath>
+#include <set>
+
+
+//My cOooDE
+
+
+using namespace std;
+ int main()
+ {
+     ios_base::sync_with_stdio(false);
+     cin.tie(NULL);
+     cout.tie(NULL);
+
+
+     int size;
+     cin >> size;
+     while (size--)
+     {
+         int n;
+         cin >> n;
+         vector<int> p(n);
+         for (auto &i: p) cin >> i;
+
+         vector<pair<int, int>> res;
+         for (int i = 0; i < n; i++)
+         {
+             res.push_back({p[i], i});
+         }
+
+         sort(res.begin(), res.end());
+
+        
+
+         vector<bool> done(n + 1);
+
+         for (int i = n - 1; i >= 0; i--)
+         {
+             for (int j = res[i].second; j < n; j++)
+             {
+                 if (done[p[j]]) break;
+                 cout << p[j] << " ";
+                 done[p[j]] = true;
+             }
+         }
+         cout << "\n";
+
+
+     }
+     return 0;
+ }
