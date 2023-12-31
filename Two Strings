@@ -1,0 +1,49 @@
+#include <iostream>
+#include <algorithm>
+#include <string>
+#include <vector>
+#include <deque>
+#include <stack>
+#include <cmath>
+#include <set>
+#include <map>
+
+
+
+
+
+using namespace std;
+ int main()
+ {
+     ios_base::sync_with_stdio(false);
+     cin.tie(NULL);
+     cout.tie(NULL);
+
+     int t;
+     cin >> t;
+     while (t--)
+     {
+         string s, s1;
+         cin >> s >> s1;
+         set<char> st, st1;
+
+         st.insert(s.begin(), s.end());
+         st1.insert(s1.begin(), s1.end());
+
+         int l = st.size() + st1.size();
+         st.insert(st1.begin(), st1.end());
+
+         int l2 = st.size();
+         if (l2 < l) cout << "YES" << endl;
+         else cout << "NO" << endl;
+
+
+         st.clear();
+         st1.clear();
+     }
+
+
+
+
+     return 0;
+ }
