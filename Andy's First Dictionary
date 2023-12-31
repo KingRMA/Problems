@@ -1,0 +1,34 @@
+#include <iostream>
+#include <set>
+#include <string>
+
+using namespace std;
+
+
+
+int main()
+{
+    string s;
+    set<string> st;
+
+    while (cin >> s)
+    {
+
+
+        string temp = "";
+
+        for (int i = 0; i < s.size(); ++i)
+        {
+            char c = tolower(s[i]);
+            if (islower(c)) temp += c;
+            else if (temp != "")
+            {
+                st.insert(temp);
+                temp = "";
+            }
+        }
+        if (temp != "") st.insert(temp);
+    }
+
+    for (set<string>::iterator i = st.begin(); i != st.end(); ++i) cout << *i << '\n';
+}
