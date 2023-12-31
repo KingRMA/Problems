@@ -1,0 +1,47 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    int n;
+    cin >> n;
+    queue<int> q;
+    multiset<int> ms;
+    while(n--)
+    {
+        int op;
+        cin >> op;
+        if(op == 1)
+        {
+            int temp;
+            cin >> temp;
+            q.push(temp);
+        }
+        else if(op == 2)
+        {
+            if(!ms.empty())
+            {
+                cout << *ms.begin() << '\n';
+                ms.erase(ms.begin());
+            }
+            else
+            {
+                cout << q.front() << '\n';
+                q.pop();
+            }
+        }
+        else while(!q.empty())
+        {
+            ms.insert(q.front());
+            q.pop();
+        }
+    }
+
+
+
+    return 0;
+}
