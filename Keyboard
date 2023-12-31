@@ -1,0 +1,53 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
+   map<char, int> normal;
+   map<char, int> left;
+   map<char, int> right;
+
+   string s = "qwertyuiopasdfghjkl;zxcvbnm,./";
+
+    for (int i = 0; i < s.size(); ++i)
+    {
+        normal[s[i]] = i;
+    }
+
+    for (int i = 0; i < s.size() - 1; ++i)
+    {
+        left[s[i]] = i + 1;
+    }
+
+    for (int i = 1; i < s.size(); ++i)
+    {
+        right[s[i]] = i - 1;
+    }
+
+    char inp;
+
+    cin >> inp;
+
+    string seq;
+
+    cin >> seq;
+
+    string res = "";
+
+    for (int i = 0; i < seq.length(); ++i)
+    {
+        if(inp == 'L') res += s[left[seq[i]]];
+        else if(inp == 'R') res += s[right[seq[i]]];
+    }
+
+    cout << res << "\n";
+
+
+
+
+
+    return 0;
+}
