@@ -1,0 +1,73 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int n;
+    cin >> n;
+
+    vector<pair<string, int>> input(n);
+    for(int i = 0; i < n; i++) 
+    {
+        cin >> input[i].first;
+        if(input[i].first != "removeMin") 
+        {
+            cin >> input[i].second;
+        }
+    }
+
+    vector<pair<string, int>> res;
+    priority_queue<int, vector<int>, greater<int>> pq;
+    int currentMin = -1000000000; // da least option without error
+
+    for(int i = 0; i < n; i++)
+    {
+        if(input[i].first == "insert") 
+        {
+            pq.push(input[i].second);
+            res.push_back(input[i]);
+            currentMin = min(currentMin, input[i].second);
+        } 
+        else if(input[i].first == "getMin") 
+        {
+            while(!pq.empty() && pq.top() < input[i].second) 
+            {
+                pq.pop();
+                res.push_back({"removeMin", -1});
+            }
+            if(pq.empty() || pq.top() > input[i].second) 
+            {
+                pq.push(input[i].second);
+                res.push_back({"insert", input[i].second});
+            }
+            res.push_back(input[i]);
+        } 
+        else 
+        {
+            if(pq.empty()) 
+            {
+                res.push_back({"insert", currentMin});
+                pq.push(currentMin);
+            }
+            pq.pop();
+            res.push_back(input[i]);
+        }
+    }
+
+    cout << res.size() << "\n";
+    for(auto &i : res)
+    {
+        if(i.first == "removeMin")
+        {
+            cout << i.first << "\n";
+        }
+        else
+        {
+            cout << i.first << " " << i.second << "\n";
+        }
+    }
+
+    return 0;
+}
