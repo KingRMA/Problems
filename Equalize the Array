@@ -1,0 +1,72 @@
+#include<bits/stdc++.h>
+#define     all(r)          r.begin(),r.end()
+
+using namespace std;
+
+int main() 
+
+{
+    long long t;
+    cin>>t;
+    while(t--)
+    {
+        long long n;
+        cin>>n;
+        long long ans;
+        long long ar[n];
+        long long mx = 1;
+        map<long long,long long> mp;
+        set<long long> st;
+        for(long long i = 0; i < n; i++)
+        {
+            cin >> ar[i];
+            st.insert(ar[i]);
+            mp[ar[i]]++;
+            mx = max(mx, mp[ar[i]]);
+        }
+        ans = 1e18;
+        vector<long long> v;
+        for(auto i: st) v.push_back(mp[i]);
+        
+        sort(all(v));//heh
+
+        long long m = v.size();
+        long long pre[m];
+        pre[0] = v[0];
+        
+        for(long long i=1; i<m; i++) pre[i] = v[i] + pre[i-1];
+        
+        for(long long i = 0; i <= mx; i++)
+        {
+            long long c = 0;
+            long long z = lower_bound(all(v),i) - v.begin();
+            long long tot = pre[m-1];
+            if(z>0)
+            {
+                c+=pre[z-1];
+                tot-=pre[z-1];
+            }
+
+            long long l=z,r=m-1;
+            c+=tot-((r-l+1)*i);
+
+            ans=min(ans,c);
+
+
+        }
+
+        cout << ans << "\n";
+
+
+
+
+
+
+
+    }
+
+
+
+
+
+}
