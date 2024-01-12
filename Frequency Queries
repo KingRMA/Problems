@@ -1,0 +1,43 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    int n;
+    cin >> n;
+    map<int, int> freq;
+    map<int, int> freqOfFreq;
+
+    for (int i = 0; i < n; ++i)
+    {
+        int op, num;
+        cin >> op >> num;
+
+        if(op == 1)
+        {
+            if(freq[num] > 0)   freqOfFreq[freq[num]]--;
+            freq[num]++;
+            freqOfFreq[freq[num]]++;
+        }
+        else if(op == 2)
+        {
+            if(freq[num] > 0)
+            {
+                freqOfFreq[freq[num]]--;
+                freq[num]--;
+                if(freq[num] > 0)  freqOfFreq[freq[num]]++;
+            }
+        }
+        else if(op == 3)
+        {
+            if(freqOfFreq[num] > 0) cout << 1 << "\n";
+            else    cout << 0 << "\n";
+        }
+    }
+
+    return 0;
+}
