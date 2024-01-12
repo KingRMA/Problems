@@ -1,0 +1,52 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+
+    int t;
+    cin >> t;
+
+    while(t--)
+    {
+        int n;
+        cin >> n;
+
+        vector<int> freq(100001);
+        int ar[n];
+
+        for (int i = 0; i < n; ++i)
+        {
+            int temp;
+            cin >> temp;
+            ar[i] = temp;
+            freq[ar[i]]++;
+        }
+        bool done = false;
+
+
+        for (int i = 0; i < 100001; ++i)
+        {
+           if(freq[i] > 1)
+            {
+               cout << "ne krasivo" << "\n";
+               done = true;
+               break;
+            }
+        }
+
+        if(!done) cout << "prekrasnyy" << "\n";
+
+
+
+
+    }
+
+
+
+    return 0;
+}
