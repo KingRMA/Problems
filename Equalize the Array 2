@@ -1,0 +1,64 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
+
+
+
+    int n;
+    cin >> n;
+
+    map<int, int> freq;
+    int ar[n];
+
+    for (int i = 0; i < n; ++i)
+    {
+        cin >> ar[i];
+        freq[ar[i]]++;
+    }
+
+    if(n != 1)
+    {
+
+
+
+
+        int mx = 0, res = 0;
+
+        for (auto pair : freq)
+        {
+            mx = max(pair.second, mx);
+        }
+
+        bool done = false;
+        for (auto pair : freq)
+        {
+            if(pair.second != mx && !done) res += pair.second;
+            else if(pair.second == mx && !done) done = true;
+            else if(pair.second == mx && done) res += pair.second;
+            else if(pair.second != mx && done) res += pair.second;
+        }
+
+        cout << res << "\n";
+    }
+    else
+    {
+        cout << 0 << "\n";
+    }
+
+/*
+
+5
+3 3 2 1 3
+
+ */
+
+
+
+
+
+    return 0;
+}
