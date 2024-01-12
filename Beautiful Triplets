@@ -1,0 +1,63 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+
+    int n, d;
+    cin >> n >> d;
+
+    vector<int> v;
+
+
+
+    for (int i = 0; i < n; ++i)
+    {
+        int temp;
+        cin >> temp;
+        v.push_back(temp);
+        
+    }
+
+
+    int res = 0;
+
+    for(int i = 0; i < v.size(); i++)
+    {
+        for(int j = i+1; j < v.size(); j++)
+        {
+            if (v[j] - v[i] == d)
+            {
+                for(int k = j+1; k < v.size(); k++)
+                {
+                    if(v[k] - v[j] == d)
+                    {
+                        res++;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    cout << res << "\n";
+
+
+
+
+    /*
+7 3
+1 2 4 5 7 8 10
+
+     */
+
+
+
+
+
+    return 0;
+}
