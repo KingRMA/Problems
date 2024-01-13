@@ -1,0 +1,71 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+
+const int N = 2e5+25;
+int n, q, pre[N], preMx[N], preMn[N], sufMx[N], sufMn[N];
+
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+
+
+    int t;
+    cin >> t;
+
+    while(t--)
+    {
+        string s;
+        cin >> n >> q >> s;
+
+        for (int i = 1; i <= n; ++i)
+        {
+            if(s[i - 1] == '+') pre[i] = pre[i - 1] + 1;
+            else pre[i] = pre[i - 1] - 1;
+            preMx[i] = max(preMx[i - 1], pre[i]);
+            preMn[i] = min(preMn[i - 1], pre[i]);
+        }
+        sufMx[n + 1] = sufMn[n + 1] = 0;
+        preMx[n + 1] = preMn[n + 1] = 0;
+        for (int i = n; i > 0; --i)
+        {
+            int r;
+            if (s[i - 1] == '+') r = 1;
+            else r = -1;
+            sufMx[i] = max(0, sufMx[i + 1] + r);
+            sufMn[i] = min(0, sufMn[i + 1] + r);
+        }
+        for (int l, r; q--; )
+        {
+            cin >> l >> r;
+            l--;
+            r++;
+            int mx = max(preMx[l], pre[l] + sufMx[r]);
+            int mn = min(preMn[l], pre[l] + sufMn[r]);
+            cout << mx - mn + 1 << '\n';
+        }
+
+
+
+
+    }
+
+
+
+
+     return 0;
+}
+/*
+ 4
+2
+3
+2
+1
+2
+2
+2
+ */
