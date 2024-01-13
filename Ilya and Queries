@@ -1,0 +1,39 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+
+    string s;
+    cin >> s;
+    int n;
+    cin >> n;
+    vector<int> pre(s.length(), 0);
+
+    for (int i = 1; i < s.length(); ++i)
+    {
+        if(s[i] == s[i-1])    pre[i] = 1;
+        pre[i] += pre[i-1];
+    }
+
+
+
+    for (int i = 0; i < n; ++i)
+    {
+        int l, r;
+        cin >> l >> r;
+        l--;
+        r--;
+        if(pre[r] - pre[l] < 0) cout << 0 << "\n";
+        else    cout << pre[r] - pre[l] << "\n";
+
+    }
+
+
+
+     return 0;
+}
