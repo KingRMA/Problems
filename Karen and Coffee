@@ -1,0 +1,62 @@
+        #include<bits/stdc++.h>
+        using namespace std;
+
+        int main()
+        {
+            ios_base::sync_with_stdio(false);
+            cin.tie(NULL);
+            cout.tie(NULL);
+
+            int n, minNum, q;
+
+            cin >> n >> minNum >> q;
+
+
+            vector<long long> pre(200010, 0);
+            vector<long long> preDone(200010, 0);
+
+            int mn = INT_MAX, mx = INT_MIN;
+            for (int i = 0; i < n; ++i)
+            {
+                int l, r;
+
+                cin >> l >> r;
+
+                pre[l]++;
+                pre[r+1]--;
+
+                mn = min(l, mn);
+                mx = max(r, mx);
+            }
+            //cout << mn << " " << mx << "\n";
+
+            for (int i = mn; i < mx+1; ++i)
+            {
+                pre[i] += pre[i-1];
+                if(pre[i] >= minNum)
+                {
+                    preDone[i]++;
+                }
+
+            }
+            for (int i = 0; i < 200010; ++i) preDone[i] += preDone[i-1];
+
+/*
+            for (int i = mn; i < mx+1; ++i) cout << pre[i] << " ";
+            cout << "\n";
+            for (int i = mn; i < mx+1; ++i) cout << preDone[i] << " ";
+            cout << "\n";
+*/
+            for (int i = 0; i < q; ++i)
+            {
+                int l, r;
+                cin >> l >> r;
+
+                if(r <= mx && l >= mn) cout << preDone[r] - preDone[l-1] << "\n";
+                if(r > mx && l < mn) cout << preDone[mx] - preDone[mn-1] << "\n";
+                else if(r > mx) cout << preDone[mx] - preDone[l-1] << "\n";
+                else if(l < mn) cout << preDone[r] - preDone[mn-1] << "\n";
+
+            }
+            return 0;
+        }
