@@ -1,0 +1,61 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    int n, m, q;
+
+    cin >> n >> m >> q;
+
+    vector<long long> ar(n+1);
+    vector<long long> pre(n+10, 0);
+
+    unordered_map<int, vector<int>> mp;
+
+    for (int i = 1; i <= n; ++i) cin >> ar[i];
+
+    for (int i = 1; i <= m; ++i)
+    {
+        int temp1, temp2, num;
+
+        cin >> temp1 >> temp2 >> num;
+        vector<int> v = {temp1, temp2, num};
+
+        mp[i] = v;
+    }
+
+    vector<long long> prefixQ(m+10, 0);
+
+    for (int i = 0; i < q; ++i)
+    {
+        int l, r;
+
+        cin >> l >> r;
+
+        prefixQ[l]++;
+        prefixQ[r+1]--;
+    }
+
+    for (int i = 1; i <= m+1; ++i) prefixQ[i] += prefixQ[i-1];
+
+    for (int i = 1; i <= m; ++i)
+    {
+        if(prefixQ[i] >= 1)
+        {
+            pre[mp[i][0]] += (mp[i][2] * prefixQ[i]);
+            pre[mp[i][1] + 1] -= (mp[i][2] * prefixQ[i]);
+        }
+    }
+
+    for (int i = 1; i <= n+1; ++i) pre[i] += pre[i-1];
+
+    for (int i = 1; i <= n; ++i) cout << ar[i] + pre[i] << " ";
+
+    cout << "\n";
+
+    return 0;
+}
