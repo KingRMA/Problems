@@ -1,0 +1,46 @@
+#include<bits/stdc++.h>
+#include <string>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    int t;
+    cin >> t;
+
+    while(t--)
+    {
+        int n;
+        string res, num, actualRes;
+
+        cin >> n >> num;
+
+        res = "1";
+        int sum = (res[0] - '0') + (num[0] - '0');
+        actualRes += to_string(sum);
+
+        for (int i = 1; i < n; ++i)
+        {
+            res += '1';
+
+            int digitSum = (res[i] - '0') + (num[i] - '0');
+            actualRes += to_string(digitSum);
+
+            if (actualRes[i - 1] == actualRes[i])
+            {
+                res[i] = '0';
+            }
+
+            sum = (res[i] - '0') + (num[i] - '0');
+
+            actualRes.pop_back();
+            actualRes += to_string(sum);
+        }
+
+        cout << res << "\n";
+    }
+
+    return 0;
+}
