@@ -1,0 +1,63 @@
+#include<bits/stdc++.h>
+#include <string>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    int t;
+    cin >> t;
+
+    while(t--)
+    {
+        int n, k;
+        cin >> n >> k;
+
+        vector<int> v(n);
+
+        for (int i = 0; i < n; ++i) cin >> v[i];
+
+        int num = 0, num2 = n-1;
+        bool done = false;
+        for (int i = 0; i < k; ++i)
+        {
+            if(num >= n)    done = true;
+            if(v[num] > 0 && !done) v[num]--;
+            else
+            {
+                if(num+1 < n) num++;
+                else
+                {
+                    if(i % 2 == 0)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        v[n-1]--;
+                        v[n-2]++;
+                        break;
+                    }
+
+                }
+                if(v[num] > 0) v[num]--;
+                else
+                {
+                    num++;
+                    i-=1;
+                    v[num2]--;
+                }
+            }
+
+            v[num2]++;
+        }
+
+        for (int i = 0; i < n; ++i) cout << v[i] << " ";
+        cout << "\n";
+
+    }
+
+    return 0;
+}
