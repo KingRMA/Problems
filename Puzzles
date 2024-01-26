@@ -1,0 +1,31 @@
+#include <iostream>
+#include <algorithm>
+using namespace std ;
+ 
+ 
+int main()
+{
+    int n,t;
+ 
+    cin >> n >> t;
+    int ar[t];
+    for (int i = 0; i < t; ++i)
+    {
+        cin >> ar[i];
+    }
+    sort(ar,ar+t);
+ 
+    int temp,res = *max_element(ar, ar + t);
+ 
+    for (int i = 0; i <= (t - n); ++i)
+    {
+        temp = ar[i + (n-1)] - ar[i];
+        res = min(temp, res);
+ 
+    }
+    cout << res;
+ 
+ 
+ 
+    return 0;
+}
