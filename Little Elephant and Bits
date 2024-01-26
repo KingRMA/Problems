@@ -1,0 +1,26 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    string s;
+
+    cin >> s;
+
+
+
+    size_t pos = s.find('0');
+    if (pos != string::npos)    s.erase(s.begin() + pos);
+    else    s.erase(s.end() - 1);
+
+    cout << s << "\n";
+
+
+
+
+
+    return 0;
+}
