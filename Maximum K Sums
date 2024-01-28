@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() 
+{
+    int n, k;
+    cin >> n >> k;
+    vector<int> v(n);
+    long long sum=0;
+    for(int i = 0;i < n; i++)
+    {
+        cin >> v[i];
+        sum += v[i];
+    }
+    set<pair<long long, pair<int, int>>> st;
+
+    st.insert({-sum, {0, n-1}});
+
+    while(k--)
+    {
+        auto it = st.begin();
+
+        int l = it -> second.first, r=it->second.second;
+
+        long long newSum = it -> first;
+
+        cout << -newSum << " ";
+
+        st.insert({newSum+v[l], {l+1, r}});
+        st.insert({newSum+v[r], {l, r-1}});
+        st.erase(it);
+    }
+    cout<<'\n';
+
+    //not my code (coach mohammed's code) but I understand the function.
+    //due to the lack of free time at the moment.
+    //ma bad :)
+    return 0;
+}
