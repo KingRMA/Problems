@@ -1,0 +1,83 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+
+
+int main()
+{
+    int n, r;
+    cin >> n >> r;
+
+    vector<pair<int , pair<int, int>>> vNeg;
+    vector<pair<int, int>> vPos;
+
+
+
+    for (int i = 0; i < n; ++i)
+    {
+        int temp1, temp2;
+
+
+        cin >> temp1 >> temp2;
+
+        if(temp2 < 0)
+        {
+            vNeg.push_back({(temp1 + temp2), {temp1, temp2}});
+        }
+        else    vPos.emplace_back(temp1, temp2);
+
+    }
+
+    sort(vNeg.begin(), vNeg.end(), [](const pair<int, pair<int, int>>& a, const pair<int, pair<int, int>>& b)
+    {
+        if(a.first != b.first) return a.first > b.first;
+        else if(a.second.first != b.second.first) return a.second.first < b.second.first;
+        else return a.second.second > b.second.second;
+
+    });
+
+    sort(vPos.begin(), vPos.end(), [](const pair<int, int>& a, const pair<int, int>& b)
+    {
+        if(a.first != b.first) return a.first < b.first;
+        else return a.second > b.second;
+    });
+
+    bool done = false;
+    for (int i = 0; i < vPos.size(); ++i)
+    {
+        if(r >= vPos[i].first) r += vPos[i].second;
+        else
+        {
+            done = true;
+            cout << "Pos: " << i << "\n";
+            break;
+        }
+
+    }
+
+    for (int i = 0; i < vNeg.size(); ++i)
+    {
+        if(r >= vNeg[i].second.first) r += vNeg[i].second.second;
+        else
+        {
+            done = true;
+            cout << "Neg: " << i << "\n";
+            break;
+        }
+
+    }
+    if(r < 0) done = true;
+
+
+//for(auto i : vPos) cout << i.first << " " << i.second << "\n";
+//for(auto i : vNeg) cout << i.second.first << " " << i.second.second << "\n";
+
+    if(!done) cout << "YES" << "\n";
+    else cout << "NO" << "\n";
+
+
+
+
+
+    return 0;
+}
