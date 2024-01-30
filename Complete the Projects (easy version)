@@ -1,15 +1,17 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-
+bool compare(pair<int, int> a, pair<int, int> b)
+{
+    return a.first + a.second > b.first + b.second;
+}
 
 int main()
 {
     int n, r;
     cin >> n >> r;
 
-    vector<pair<int , pair<int, int>>> vNeg;
-    vector<pair<int, int>> vPos;
+    vector<pair<int, int>> vPos, vNeg;
 
 
 
@@ -22,25 +24,15 @@ int main()
 
         if(temp2 < 0)
         {
-            vNeg.push_back({(temp1 + temp2), {temp1, temp2}});
+            vNeg.emplace_back(temp1, temp2);
         }
         else    vPos.emplace_back(temp1, temp2);
 
     }
 
-    sort(vNeg.begin(), vNeg.end(), [](const pair<int, pair<int, int>>& a, const pair<int, pair<int, int>>& b)
-    {
-        if(a.first != b.first) return a.first > b.first;
-        else if(a.second.first != b.second.first) return a.second.first < b.second.first;
-        else return a.second.second > b.second.second;
+    sort(vNeg.begin(), vNeg.end(), compare);
 
-    });
-
-    sort(vPos.begin(), vPos.end(), [](const pair<int, int>& a, const pair<int, int>& b)
-    {
-        if(a.first != b.first) return a.first < b.first;
-        else return a.second > b.second;
-    });
+    sort(vPos.begin(), vPos.end());
 
     bool done = false;
     for (int i = 0; i < vPos.size(); ++i)
@@ -49,7 +41,7 @@ int main()
         else
         {
             done = true;
-            cout << "Pos: " << i << "\n";
+            //cout << "Pos: " << i << "\n";
             break;
         }
 
@@ -57,11 +49,11 @@ int main()
 
     for (int i = 0; i < vNeg.size(); ++i)
     {
-        if(r >= vNeg[i].second.first) r += vNeg[i].second.second;
+        if(r >= vNeg[i].first) r += vNeg[i].second;
         else
         {
             done = true;
-            cout << "Neg: " << i << "\n";
+            //cout << "Pos: " << i << "\n";
             break;
         }
 
