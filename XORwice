@@ -1,0 +1,30 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+
+
+int main()
+{
+    int t;
+    cin >> t;
+
+    while(t--)
+    {
+        long long n, m;
+        cin >> n >> m;
+
+        long long bigger = max(n, m), smaller = min(m, n);
+
+        cout << (bigger^smaller) << "\n";
+
+
+    }
+
+
+
+
+
+
+
+    return 0;
+}
