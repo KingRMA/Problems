@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+
+
+int main()
+{
+
+
+         int l, r, mx = INT_MIN;
+         cin >> l >> r;
+
+
+        for (int i = l; i <= r; ++i)
+         {
+             int tempMx = 0;
+             for (int j = l; j <= r; ++j)
+             {
+
+                 tempMx = max(tempMx, (i^j));
+             }
+
+
+             mx = max(tempMx, mx);
+
+         }
+
+         cout << mx << "\n";
+
+
+
+
+
+
+
+
+         return 0;
+}
