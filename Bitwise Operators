@@ -1,0 +1,70 @@
+#include <bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+
+
+int main()
+{
+    int t;
+    cin >>t;
+
+    while(t--) {
+        ll n;
+        cin >> n;
+
+        if (n == 1) {
+            cout << -1 << "\n";
+            continue;
+        }
+
+        int ind = 1;
+
+        if ((n % 2) == 0) // last bit is 0
+        {
+
+            string num = bitset<32>(n).to_string();
+            //cout << "num: " << num << "\n";
+
+            for (int i = (num.length() - 1); i >= 0; i--)
+            {
+                //cout << "num[i] = " << num[i] << "\ti: " << i << "\n";
+                if(num[i] == '1')
+                {
+                    ind = abs(31-i);
+                    break;
+                }
+            }
+
+            //cout << "ind: " << ind << "\n";
+
+            int b = n;
+
+
+
+            string bString =  bitset<32>(b).to_string();
+
+            bString[31 - ind] = '0';
+
+            //cout << bString << "\n";
+            b = 0;
+            for (int i = (bString.length() - 1); i >= 0; i--)  if(bString[i] == '1') b += pow(2, abs(31-i));
+
+            //cout << "b: " << b << "\n";
+
+
+            if((pow(2, ind)) > 0 && (pow(2, ind)) <= b && b <= n)
+            {
+                cout << (pow(2, ind)) << " " << b << "\n";
+            }
+            else cout << -1 << "\n";
+            //else cout << -1 << "\t(pow(2, ind)): " << (pow(2, ind)) << "\n";
+            continue;
+        }
+        cout << 1 << " " << (n - 1) << "\n";
+        //cout << (1^(n-1)) << "\n";
+
+    }
+
+        return 0;
+}
