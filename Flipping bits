@@ -11,14 +11,10 @@ int main()
 
     while(t--)
     {
-        int n;
+        unsigned int n;
         cin >> n;
 
-        string num = bitset<32>((-n)).to_string();
-
-
-
-        cout << bitset<32>(num).to_ulong() - 1 << "\n";
+        cout << ~n << "\n";
 
     }
          return 0;
