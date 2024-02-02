@@ -1,0 +1,26 @@
+#include <bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+
+
+int main()
+{
+
+    int n;
+    cin >> n;
+    
+    vector<int> v(n);
+    for (int i = 0; i < n; i++) cin >> v[i];
+    
+    
+    int t = v[0];
+    for (int i = 1; i < n; i++) 
+    {
+        t = t ^ v[i];
+    }
+    for (int i: v) cout << (i ^ t) << " ";
+
+
+    return 0;
+}
