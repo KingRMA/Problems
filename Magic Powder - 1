@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+
+    ll n, k;
+    cin >> n >> k;
+    vector<ll>v(n);
+    vector<ll>v2(n);
+
+    for (int i = 0; i < n; ++i) cin>>v[i];
+    for (int i = 0; i < n; ++i) cin>>v2[i];
+
+    ll mn2 = INT_MAX, mn = INT_MAX;
+
+    ll idx = -1;
+    while(k--)
+    {
+        mn = INT_MAX;
+        mn2 = INT_MAX;
+        for (int i = 0; i < n; i++)
+        {
+            mn = min(mn, v2[i] / v[i]);
+            if(mn2 != mn) idx=i;
+            mn2 = mn;
+        }
+        v2[idx]++;
+    }
+    ll res = 1e30;
+    for (int i = 0; i < n; i++)    res=min(res, (v2[i]/v[i]));
+    cout << res << "\n";
+}
