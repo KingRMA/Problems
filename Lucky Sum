@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+set<ll> s;
+void gen(ll num)
+{
+    if(num > 7777777777) return;
+    s.insert(num);
+    
+    gen(num * 10 + 4);
+    gen(num * 10 + 7);
+}
+
+
+int main () 
+{
+    ios_base::sync_with_stdio(0) ;
+    cin.tie(0); cout.tie(0);
+
+    ll n, m; 
+    cin >> n >> m ;
+    gen(4);gen(7);//sort ?
+    auto it = s.lower_bound(n);//start from first lucky num and and to sum
+    ll res = *it, i = n + 1;
+    while(it != s.end())
+    {
+        if(i > m) break;
+        else if(*it >= i)
+        {
+            res += (min(*it,m) - i + 1) * (*it);// add from i to it
+            i = *it + 1;
+        }
+        else it = s.lower_bound(i); //change so if can work
+    }
+
+    cout << res << "\n";
+
+    return 0 ;
+}
+ 	 		 		   			     		
