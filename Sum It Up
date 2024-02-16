@@ -1,0 +1,58 @@
+#include <bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+void rec(vector<int>& nums, int x, vector<int>& path, int idx, vector<vector<int>>& res, vector<bool>& used) 
+{
+    if (x == 0) 
+    {
+        res.push_back(path);
+        return;
+    }
+
+    for (int i = idx; i < nums.size(); ++i)
+    {
+        if (used[i] || (i > 0 && nums[i] == nums[i - 1] && !used[i - 1]))   continue;
+
+        if (nums[i] <= x)
+        {
+            used[i] = true;
+            path.push_back(nums[i]);
+            rec(nums, x - nums[i], path, i + 1, res, used); // Pass i+1 instead of i to avoid reusing same element
+            path.pop_back();
+            used[i] = false;
+        }
+    }
+}
+
+int main()
+{
+    int t, n;
+    while (cin >> t >> n && (t || n))//smort
+    {
+        vector<int> nums(n);
+        vector<bool> used(n, false);
+        for (int i = 0; i < n; ++i) cin >> nums[i];
+
+        sort(nums.begin(), nums.end(), greater<int>());//why yellow line btw ?
+
+
+        vector<vector<int>> res;
+        vector<int> path;
+        rec(nums, t, path, 0, res, used);
+
+        cout << "Sums of " << t << ":" << endl;
+        if (res.empty())    cout << "NONE" << endl;
+        else
+        {
+            sort(res.begin(), res.end(), greater<vector<int>>());
+            for (const auto& vec : res)
+            {
+                cout << vec[0];
+                for (int i = 1; i < vec.size(); ++i)    cout << "+" << vec[i];
+                cout << endl;
+            }
+        }
+    }
+    return 0;
+}
