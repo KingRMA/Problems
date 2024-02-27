@@ -1,0 +1,36 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+const int MAX = 1e6+9;
+vector<int> factor(MAX, 0);
+vector<vector<int>> factorCount(MAX);
+
+void sieve()
+{
+    for(int i = 2; i < MAX; i++)
+    {
+        if(factor[i] == 0)  for(int j = i; j < MAX; j += i) factor[j]++;
+    }
+    for(int i = 1; i < MAX; i++)    factorCount[factor[i]].push_back(i);
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    sieve();
+
+
+    int t;
+    cin >> t;
+    while(t--) 
+    {
+        int l, r, n;
+        cin >> l >> r >> n;
+        int res = upper_bound(factorCount[n].begin(), factorCount[n].end(), r) - lower_bound(factorCount[n].begin(), factorCount[n].end(), l);
+//        for(auto i : factorCount[n]) cout << i << " ";
+//        cout << "\n";
+        cout << res << "\n";
+    }
+    return 0;
+}
