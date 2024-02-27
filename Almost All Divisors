@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    int t;
+    cin >> t;
+    while(t--)
+    {
+        ll n;
+        cin >> n;
+        set<ll> st, st2;
+        for(ll i = 0; i < n ;i++)
+        {
+            ll temp;
+            cin >> temp;
+            st.insert(temp);
+        }
+
+        ll res = *st.begin() * *st.rbegin();
+
+        for(ll i = 2; i*i <= res; i++)
+        {
+            if(res % i == 0)
+            {
+                st2.insert(i);
+                st2.insert(res/i);
+            }
+        }
+
+        if(st == st2) cout << res << "\n";
+        else cout << -1 << "\n";
+    }
+
+
+    return 0;
+}
