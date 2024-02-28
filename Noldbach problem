@@ -1,0 +1,77 @@
+#include<bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+
+const int N = 1100;
+vector<int> primes, pre(184);
+bool isPrime[N + 1];
+
+bool numisPrime(int n)
+{
+    if (n <= 1) return false;
+    if (n <= 3) return true;
+    if (n % 2 == 0 || n % 3 == 0) return false;
+    for (int i = 5; i * i <= n; i += 6) {
+        if (n % i == 0 || n % (i + 2) == 0) return false;
+    }
+    return true;
+}
+
+void sieve()
+{
+    fill(isPrime, isPrime + N, true);
+    isPrime[0] = isPrime[1] = false;
+    for (int i = 2; i <= N; ++i)
+    {
+        if (isPrime[i])
+        {
+            for (int j = i + i; j <= N; j += i)
+                isPrime[j] = false;
+        }
+    }
+
+    for (int i = 2; i <= N; ++i)    if(isPrime[i]) primes.push_back(i);
+    for (int i = 0; i < 183; ++i) pre[i] = (primes[i] + primes[i+1] + 1);
+
+}
+
+int main()
+{
+
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
+    sieve();
+
+    int n, k, res = 0;
+    cin >> n >> k;
+//    for(auto j : pre) cout << j << " ";
+//    cout << "\n";
+    for(int i = 0; i <= n; i++)
+    {
+        if(primes[i] > n) break;
+        for(auto j : pre)
+        {
+            if(primes[i] == j)
+            {
+                //cout << "The prime: " << primes[i] << " the sum: " << j << "\n";
+                res++;
+                break;
+            }
+
+        }
+
+
+    }
+
+
+    if(res >= k) cout << "YES" << "\n";
+    else cout << "NO" << "\n";
+
+
+
+
+    return 0;
+}
+//prolly wont work
