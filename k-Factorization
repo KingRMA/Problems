@@ -1,0 +1,44 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+vector<int> factorize(int n)
+{
+    vector<int> factors;
+    for (int i = 2; i * i <= n; ++i) {
+        //int power = 0;
+        while (n % i == 0)
+        { // i is the smallest prime factor of n
+            factors.emplace_back(i);
+            n /= i; // remove i from n and repeat the process
+        }
+        //if (power > 0) factors.emplace_back(i, power);
+    }
+// if n is not 1, it must be a prime number
+    if (n != 1) factors.emplace_back(n);
+    return factors;
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int n, k;
+    cin >> n >> k;
+    vector<int> v = factorize(n);
+
+    if(v.size() < k)
+    {
+        cout << -1 << "\n";
+        return 0;
+    }
+
+    for (int i = 0; i < k-1; ++i)   cout << v[i] << " ";
+
+    int rest = 1;
+    for (int i = k-1; i < v.size(); ++i) rest *= v[i];
+
+    if(rest != 1) cout << rest << "\n";
+
+    return 0;
+}
