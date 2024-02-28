@@ -1,0 +1,38 @@
+#include<bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+const int N = 1e6+9;
+
+vector<int> prime(N, 1);
+
+void sieve()
+{
+    
+    prime[0] = prime[1] = 0;
+    for(int i = 2; i*i < N; i++)
+        if(prime[i])
+            for(int j = i*i; j < N; j += i) prime[j]=0;
+}
+
+int main()
+{
+
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
+    sieve();
+    int n;
+    cin >> n;
+    while(n--)
+    {
+        ll temp;
+        cin >> temp;
+        ll smol = (ll) sqrt(temp);
+        if(smol*smol == temp && prime[smol]) cout << "YES" << "\n";
+        else cout << "NO" << "\n";
+    }
+
+
+    return 0;
+}
