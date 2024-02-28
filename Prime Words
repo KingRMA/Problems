@@ -1,0 +1,44 @@
+#include<bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+
+bool isPrime( long int n)
+{
+    if( n==1) return true;
+    else if( n==2) return true;
+    else
+    {
+        for( int i=2; i<=sqrt( n+0.5); ++i)
+            if( n%i==0) return false;
+
+        return true;
+    }
+}
+
+
+int main()
+{
+
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
+    string s;
+    while( cin>>s)
+    {
+        ll val = 0;
+        for( int i = 0; i != s.size(); ++i)
+        {
+            if(isupper(s[i])) val += s[i] - 'A' + 27;
+            else if(islower(s[i])) val += s[i] - 'a' + 1;
+        }
+        if(isPrime(val)) cout << "It is a prime word." << endl;
+        else cout << "It is not a prime word." << endl;
+
+
+    }
+
+
+
+    return 0;
+}
