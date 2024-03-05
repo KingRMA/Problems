@@ -1,0 +1,27 @@
+#include<bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+    while(t--)
+    {
+        ll l, r;
+        cin >> l >> r;
+        ll num = lcm(l, l*2);
+
+        if(num >= l && num <= r)    cout << l << " " << l*2 << "\n";
+        else cout << -1 << " " << -1 << "\n";
+
+
+
+
+    }
+
+    return 0;
+}
