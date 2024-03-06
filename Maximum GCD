@@ -1,0 +1,54 @@
+#include<bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+long long gcd(long long int a, long long int b)
+{
+    if (b == 0)
+        return a;
+    return gcd(b, a % b);
+}
+
+long long lcm(int a, int b)
+{
+    return (a / gcd(a, b)) * b;
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+
+    int t;
+    cin >> t;
+
+    while(t--)
+    {
+        int n;
+        cin >> n;
+        if(n%2==0) cout << n/2 << "\n";
+        else cout << (n-1)/2 << "\n";
+    }
+
+
+
+/*
+ 5: 2, 4
+ 10: 5, 10
+ 15: 7, 14
+ 20: 9, 18
+ */
+
+
+
+
+
+
+
+
+
+
+
+    return 0;
+}
