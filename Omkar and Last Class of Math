@@ -1,0 +1,84 @@
+#include <bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+
+vector<ll> factorize(ll num) {
+    vector<ll> factors;
+
+    for (ll i = 1; i * i <= num; ++i) {
+        if (num % i == 0) {
+            factors.push_back(i);
+            if (num / i != i) {
+                factors.push_back(num / i);
+            }
+        }
+    }
+
+    return factors;
+}
+
+
+int main()
+{
+
+//    ll n, mn = INT_MAX;
+//    cin >> n;
+//
+//    for (ll i = 1; i <= n-1; ++i)
+//    {
+//        for (ll j = n-1; j > 0; --j)
+//        {
+//            if(i+j == n)
+//            {
+//                cout << i << " + " << j << " = " << i+j << " LCM = " << lcm(i,j) << "\n";
+//                mn = min(mn, lcm(i,j));
+//            }
+//
+//        }
+//
+//    }
+//    cout << "min: " << mn << "\n";
+
+    ll t;
+    cin >> t;
+    while (t--)
+    {
+        ll n;
+        cin >> n;
+
+        if(n % 2 == 0) cout << n/2 << " " << n/2 << "\n";
+        else
+        {
+            vector<ll> facts = factorize(n);
+            sort(facts.begin(), facts.end());
+            ll num1 = facts[facts.size() - 2];
+            if(num1 != n)   cout << num1 << " " << n - num1 << "\n";
+            else cout << n-1 << " " << 1 << "\n";
+
+
+        }
+
+    }
+
+
+    /*
+     4: 2 + 2 = 4 LCM = 2
+     50: 25 + 25 = 50 LCM = 25
+     1000: 500 + 500 = 1000 LCM = 500
+
+     9: 3 + 6 = 9 LCM = 6
+     15: 10 + 5 = 15 LCM = 10
+     49: 7 + 42 = 49 LCM = 42
+     63: 21 + 42 = 63 LCM = 42
+     12557: 433 + 12124 = 12557 LCM = 12124
+     second largest factor ?
+
+
+     */
+
+
+
+
+    return 0;
+}
