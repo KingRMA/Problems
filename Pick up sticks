@@ -1,0 +1,65 @@
+#include <bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+int cycle;
+vector<int> res;
+void dfs(int u, vector<int>&vis, vector<vector<int>>&adj)
+{
+    vis[u] = 1;
+
+    for(int v: adj[u])
+        if(vis[v] == 0) dfs(v, vis, adj);
+        else if(vis[v] == 1) cycle = 1;
+
+    vis[u] = 2;
+    res.push_back(u+1);
+}
+
+int main()
+{
+
+    int n, m;
+
+    while(cin >> n >> m, n || m)
+    {
+        vector<vector<int>> adj(n);
+        vector<int> vis(n);
+        while(m--)
+        {
+            int u, v;
+            cin >> u >> v;
+            adj[--u].push_back(--v);
+        }
+
+
+
+    for (int i = 0; i < n; ++i)
+    {
+        if(vis[i] == 0 && cycle == 0) dfs(i, vis, adj);
+    }
+
+    if(cycle) cout << "IMPOSSIBLE" << "\n";
+    else
+    {
+        reverse(res.begin(), res.end());
+        for(auto i : res) cout << i << "\n";
+    }
+        res.clear();
+        cycle = 0;
+
+
+}
+
+
+
+
+    return 0;
+}
+/*
+3 2
+1 2
+2 3
+0 0
+
+ */
