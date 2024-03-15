@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+
+void dfs(int u, vector<int>&dep, vector<vector<int>>&adj)
+{
+    for(int v:adj[u])
+    {
+        dep[v] = dep[u] + 1;
+        dfs(v, dep, adj);
+    }
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    vector<vector<int>> adj(n);
+    vector<int>p, d(n, 0);
+    for(int i = 0; i<n; i++)
+   {
+        int temp;
+        cin >> temp;
+        if(temp == -1) p.push_back(i);
+        else adj[--temp].push_back(i);
+    }
+    for(int temp : p) dfs(temp, d, adj);
+    int res = 0;
+    for(auto x : d) res = max(res, x);
+    cout << res + 1 << '\n';
+
+    return 0;
+}
+/*
+3 2
+1 2
+2 3
+0 0
+inspired by our amazing coach :)
+ */
