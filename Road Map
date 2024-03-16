@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+void dfs(int u, vector<int>&parent, vector<bool>&vis, vector<vector<int>>&adj)
+{
+    vis[u]=true;
+    for(int v:adj[u])
+    {
+        if(!vis[v])
+        {
+            parent[v]=u+1;
+            dfs(v, parent, vis, adj);
+        }
+    }
+
+}
+
+int main()
+{
+    int n, old, newR;
+    cin >> n >> old >> newR;
+    vector<vector<int>> adj(n);
+    for(int i = 0; i < n; i++)
+    {
+        if(i+1 != old)
+        {
+            int j;
+            cin >> j;
+            adj[--j].push_back(i);
+            adj[i].push_back(j);
+        }
+    }
+    vector<bool>vis(n, false);
+    vector<int>parent(n);
+
+    dfs(newR-1, parent, vis, adj);
+    for(int i = 0; i < n; i++)  if(i+1 != newR)   cout << parent[i] << " ";
+
+    cout << "\n";
+
+    return 0;
+    //code from last session
+}
