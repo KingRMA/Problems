@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+void dfs(int u, vector<bool>&vis, vector<vector<int>>&adj, map<int, int>&Inv)
+{
+    cout << Inv[u] << " ";
+    vis[u] = true;
+    for(int v:adj[u])   if(!vis[v]) dfs(v, vis, adj, Inv);
+}
+
+int main()
+{
+    int n, temp = 1;
+    cin >> n;
+    vector<vector<int>> adj(n+2);
+    vector<bool> vis(n+2, false);
+    map<int, int> mp, Inv;
+    for(int i = 0; i < n; i++)
+    {
+        int u, v;
+        cin >> u >> v;
+        if(mp[u] == 0) mp[u] = temp, Inv[temp] = u, temp++;
+        if(mp[v] == 0) mp[v] = temp, Inv[temp] = v, temp++;
+        adj[mp[u]].push_back(mp[v]);
+        adj[mp[v]].push_back(mp[u]);
+    }
+    for(int i = 1; i <= n;i++)
+    {
+        if(adj[i].size() == 1)
+        {
+            dfs(i, vis, adj, Inv);
+            break;
+        }
+    }
+
+    return 0;
+
+    //also heavily inspired by the coach last session
+}
