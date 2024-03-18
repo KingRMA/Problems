@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+const int N = 32768, OO = 0x3f3f3f3f;
+
+int main()
+{
+
+    vector<int>dist(N+10, OO);
+    queue<int>q;
+    vector<vector<int>> adj(N+10);
+    for(int i = 0; i < N; i++)
+    {
+        adj[(i+1)%N].push_back(i);
+        adj[(2*i)%N].push_back(i);
+    }
+    q.push(0);
+    dist[0] = 0;
+    while(!q.empty())
+    {
+        int u = q.front();
+        q.pop();
+        for(int v:adj[u])
+        {
+            if(dist[v] == OO)
+            {
+                dist[v] = dist[u]+1;
+                q.push(v);
+            }
+        }
+    }
+    int n;
+    cin >> n;
+    for(int i = 0; i < n; i++)
+    {
+        int x;
+        cin >> x;
+        cout << dist[x] << " ";
+    }
+    cout << "\n";
+
+    return 0;
+}
+//written in the session w the coach
