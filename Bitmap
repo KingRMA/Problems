@@ -1,0 +1,64 @@
+#include <bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+int dx[]={0, 0, -1, 1};
+int dy[]={-1, 1, 0, 0};
+int OO = 9999999;
+bool valid(int x, int y, int n, int m)
+{
+    return x >= 0 && x < n && y >= 0 && y < m;
+}
+void bfs(int n, int m, queue<pair<int, int>>&q, vector<vector<bool>>&vis, vector<vector<int>>&dist)
+{
+    while(!q.empty())
+    {
+        int x = q.front().first, y = q.front().second;
+        q.pop();
+        for(int i = 0; i < 4; i++)
+        {
+            int newX = x + dx[i], newY = y + dy[i];
+            if(valid(newX, newY, n, m) && !vis[newX][newY])
+            {
+                q.emplace(newX, newY);
+                vis[newX][newY] = true;
+                dist[newX][newY] = dist[x][y] + 1;
+            }
+        }
+    }
+}
+
+
+int main()
+{
+
+    int t;
+    cin >> t;
+    while(t--)
+    {
+        int n, m;
+        cin >> n >> m;
+        vector<string> grid(n);
+        for(int i = 0; i < n; i++) cin >> grid[i];
+        vector<vector<int>> dist(n, vector<int>(m, OO));
+        vector<vector<bool>> vis(n, vector<bool>(m, false));
+        queue<pair<int, int>> q;
+        for(int i = 0; i < n; i++)
+            for(int j = 0; j < m; j++)
+                if(grid[i][j] == '1')
+                {
+                    vis[i][j] = true;
+                    dist[i][j] = 0;
+                    q.emplace(i, j);
+                }
+        bfs(n, m, q, vis, dist);
+        for(int i = 0; i < n; i++)
+        {
+            for(int j = 0; j < m; j++) cout << dist[i][j] << " ";
+            cout << "\n";
+        }
+    }
+
+    return 0;
+}
+//written in the session w the coach
