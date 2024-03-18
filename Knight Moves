@@ -1,0 +1,60 @@
+#include <bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+int dx[]={2, 2, -1, 1, -2, -2, -1, 1};
+int dy[]={1, -1, 2, 2, -1, 1, -2, -2};
+int OO = 9999999;
+bool valid(int x, int y, int n, int m)
+{
+    return x >= 0 && x < n && y >= 0 && y < m;
+}
+void bfs(int n, int m, queue<pair<int, int>>&q, vector<vector<bool>>&vis, vector<vector<int>>&dist)
+{
+    while(!q.empty())
+    {
+        int x = q.front().first, y = q.front().second;
+        q.pop();
+        for(int i = 0; i < 8; i++)
+        {
+            int newX = x + dx[i], newY = y + dy[i];
+            if(valid(newX, newY, n, m) && !vis[newX][newY])
+            {
+                q.emplace(newX, newY);
+                vis[newX][newY] = true;
+                dist[newX][newY] = dist[x][y] + 1;
+            }
+        }
+    }
+}
+
+int main()
+{
+    char s, s2;
+    int y, y2;
+    while(cin >> s >> y >> s2 >> y2)
+    {
+        int x = s - 'a', x2 = s2 - 'a';
+        y--; y2--;
+        vector<vector<bool>> vis(8, vector<bool>(8, false));
+        vector<vector<int>> dist(8, vector<int>(8, OO));
+        queue<pair<int, int>> q;
+        q.emplace(x, y);
+        vis[x][y] = true;
+        dist[x][y] = 0;
+        bfs(8, 8, q, vis, dist);
+        cout << "To get from " << s << y+1 << " to " << s2 << y2+1 << " takes " << dist[x2][y2] << " knight moves." << endl;
+    }
+    return 0;
+}
+/*
+e2 e4
+a1 b2
+b2 c3
+a1 h8
+a1 h7
+h8 a1
+b1 c3
+f6 f6
+
+ */
