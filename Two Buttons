@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+const ll N = 1e4+9, OO = 0x3f3f3f3f;
+
+int main()
+{
+
+    vector<ll>dist(N+10, OO);
+    queue<ll>q;
+    vector<vector<ll>> adj((N*2)+10);
+    for(ll i = 1; i < N; i++)
+    {
+        adj[(i-1)].push_back(i);
+        adj[(2*i)].push_back(i);
+    }
+    ll n, m;
+    cin >> n >> m;
+    q.push(m);
+    dist[m] = 0;
+    while(!q.empty())
+    {
+        ll u = q.front();
+        q.pop();
+        for(ll v:adj[u])
+        {
+            if(dist[v] == OO)
+            {
+                dist[v] = dist[u]+1;
+                q.push(v);
+            }
+        }
+    }
+
+    cout << dist[n] << "\n";
+
+
+
+    return 0;
+}
