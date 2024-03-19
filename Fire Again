@@ -2,8 +2,8 @@
 typedef long long ll;
 using namespace std;
 
-int dx[]={0, 0, -1, 1, 1};
-int dy[]={-1, 1, 0, 0, 1};
+int dx[]={0, 0, -1, 1};
+int dy[]={-1, 1, 0, 0};
 int OO = 9999999;
 bool valid(int x, int y, int n, int m)
 {
@@ -15,7 +15,7 @@ void bfs(int n, int m, queue<pair<int, int>>&q, vector<vector<bool>>&vis, vector
     {
         int x = q.front().first, y = q.front().second;
         q.pop();
-        for(int i = 0; i < 5; i++)
+        for(int i = 0; i < 4; i++)
         {
             int newX = x + dx[i], newY = y + dy[i];
             if(valid(newX, newY, n, m) && !vis[newX][newY])
