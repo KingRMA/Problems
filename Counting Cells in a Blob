@@ -1,0 +1,98 @@
+#include <bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+
+
+int floodFillBFS(vector <vector<char>>& grid, int start_x, int start_y, vector<vector<bool>>& vis)
+{
+    int n = grid.size(), m = grid[0].size();
+    int dx[] = {+0, +0, +1, -1, +1, -1, +1, -1};
+    int dy[] = {+1, -1, +0, +0, +1, -1, -1, +1};
+
+    queue <pair<int, int>> q;
+
+    q.push({start_x, start_y});
+
+    const char obstacle = '1', water_cell = '0';
+    int res = 0;
+    while(!q.empty())
+    {
+
+
+        int x = q.front().first;
+        int y = q.front().second;
+        vis[x][y] = true;
+        q.pop();
+
+        for(int i = 0; i < 8; i++)
+        {
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+
+            if(nx < 0 || nx >= n || ny < 0 || ny >= m || grid[nx][ny] != obstacle || vis[nx][ny]) continue;
+            grid[nx][ny] = water_cell;
+            q.push({nx, ny});
+        }
+        res++;
+    }
+    return res;
+}
+
+
+int main()
+{
+
+    int t;
+    cin >> t;
+
+    while (t--)
+    {
+        string s;
+        cin >> s;
+        int n = s.size();
+        vector<vector<char>> grid(n);
+        for (int i = 0; i < n; ++i) grid[0].push_back(s[i]);
+
+        vector<vector<bool>> vis(n, vector<bool>(n ,false));
+        for (int i = 1; i < n; ++i)
+        {
+            string temp;
+            cin >> temp;
+            for (int j = 0; j < temp.size(); ++j)   grid[i].push_back(temp[j]);
+            cin.ignore();
+        }
+
+        int res = -1;
+
+        for (int i = 0; i < n; ++i)
+        {
+            for (int j = 0; j < n; ++j)
+            {
+                if(grid[i][j] == '1')
+                {
+                    vis[i][j] = true;
+                    res = max(res, floodFillBFS(grid, i, j, vis));
+                }
+            }
+
+        }
+        if(res > 0) cout << res << "\n";
+        else cout << 0 << "\n";
+
+        grid.clear();
+    }
+
+
+    return 0;
+}
+
+/*
+1
+11000
+01100
+00101
+10001
+01011
+
+ */
