@@ -79,6 +79,7 @@ int main()
         }
         if(res > 0) cout << res << "\n";
         else cout << 0 << "\n";
+        if(t!=0) cout << "\n";
 
         grid.clear();
     }
