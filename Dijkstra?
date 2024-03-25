@@ -1,0 +1,73 @@
+#include <bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+const ll INF = 1e15;
+vector<ll> par;
+
+void dijkstra(ll src, ll n, vector<ll>& dis, vector<vector<pair<ll, ll>>>& adj) {
+    dis.assign(n, INF);
+    par.assign(n, -1); // initialize the par array
+    priority_queue<pair<ll, ll>> pq;
+    dis[src] = 0;
+    pq.push(make_pair(0, src));
+    while (!pq.empty()) {
+        ll d = -pq.top().first;
+        ll u = pq.top().second;
+        pq.pop();
+        if (d > dis[u]) continue;
+        for (auto &edge : adj[u]) {
+            ll v = edge.first, c = edge.second;
+            if (dis[u] + c < dis[v]) {
+                dis[v] = dis[u] + c;
+                pq.push(make_pair(-dis[v], v));
+                par[v] = u;
+            }
+        }
+    }
+}
+
+vector<ll> get_path(ll src, ll u)
+{
+    vector<ll> path;
+    while (u != src)
+    {
+        path.push_back(u);
+        u = par[u];
+    }
+    path.push_back(src);
+    reverse(path.begin(), path.end());
+    return path;
+}
+
+int main() {
+    ll n, m;
+    cin >> n >> m;
+    vector<vector<pair<ll, ll>>> adj(n+9);
+    vector<ll> dis(n+9);
+    bool nExists = false;
+
+    for (ll i = 0; i < m; ++i)
+    {
+        ll a, b, c;
+        cin >> a >> b >> c;
+        if(a == n || b == n) nExists = true;
+
+        adj[a-1].emplace_back(b-1, c);
+        adj[b-1].emplace_back(a-1, c);
+    }
+
+    dijkstra(0, n, dis, adj);
+
+
+
+        if (dis[n-1] != INF)
+        {
+            vector<ll> res = get_path(0, n - 1);
+            for (auto i : res) cout << i + 1 << " ";
+            cout << "\n";
+        }
+        else    cout << -1 << "\n";
+
+    return 0;
+}
