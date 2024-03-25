@@ -1,0 +1,57 @@
+#include <bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+
+const ll INF = 1e9;
+
+void dijkstra(ll src, vector<vector<pair<ll, ll>>>& adj, vector<ll>& dis) {
+    ll n = adj.size();
+    dis.assign(n, INF);
+    priority_queue<pair<ll, ll>> pq;
+    dis[src] = 0;
+    pq.push(make_pair(0, src));
+    while (!pq.empty()) {
+        ll d = -pq.top().first;
+        ll u = pq.top().second;
+        pq.pop();
+
+        if (d > dis[u]) continue;
+        for (auto& edge : adj[u]) {
+            ll v = edge.first, c = edge.second;
+            if (dis[u] + c < dis[v]) {
+                dis[v] = dis[u] + c;
+                pq.push(make_pair(-dis[v], v));
+            }
+        }
+    }
+}
+
+int main() 
+{
+    
+    ll t;
+    cin >> t;
+
+    while (t--) {
+        ll n, m, st, tar;
+        cin >> n >> m >> st >> tar;
+        vector<vector<pair<ll, ll>>> adj(n);
+
+        for (ll i = 0; i < m; ++i) 
+        {
+            ll src, end, weight;
+            cin >> src >> end >> weight;
+            adj[src - 1].emplace_back(end - 1, weight);
+            adj[end - 1].emplace_back(src - 1, weight);
+        }
+
+        vector<ll> dis;
+        dijkstra(st - 1, adj, dis);
+
+        if (dis[tar - 1] == INF)    cout << "NONE" << "\n";
+        else    cout << dis[tar - 1] << "\n";
+    }
+
+    return 0;
+}
