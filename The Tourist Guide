@@ -1,0 +1,101 @@
+#include <bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+const ll INF = 1e15;
+
+vector<ll> dijkstra(ll src, vector<vector<pair<ll, ll>>>& adj)
+{
+    vector<ll> dist(adj.size(), -INF);
+
+    dist[src] = INF;
+
+    priority_queue<pair<ll, ll>> pq;
+
+    pq.emplace(dist[src], src);
+
+    while(!pq.empty())
+    {
+        ll parCost = pq.top().first, parNode = pq.top().second;
+        pq.pop();
+        for(auto [cost, node] : adj[parNode])
+        {
+            if(min(cost, parCost) > dist[node])
+            {
+                dist[node] = min(cost, parCost);
+                pq.emplace(dist[node], node);
+            }
+        }
+
+    }
+
+    return dist;
+   
+}
+
+
+int main()
+{
+    ll n, m, cnt = 0;
+    while(cin >> n >> m && (n | m))
+    {
+        cout << "Scenario #" << ++cnt << "\n";
+        cout << "Minimum Number of Trips = ";
+
+
+        vector<vector<pair<ll, ll>>> adj(n);
+
+        for (ll i = 0; i < m; ++i)
+        {
+            ll s, d, w;
+            cin >> s >> d >> w;
+
+            adj[--s].emplace_back(w, --d);
+            adj[d].emplace_back(w, s);
+        }
+
+        ll s, d, tot;
+        cin >> s >> d >> tot;
+
+        if(s == d) cout << "0\n\n";
+        else
+        {
+            auto res = dijkstra(s - 1, adj);
+
+            ll bestLimit = res[d-1] - 1;
+
+            cout << (tot + bestLimit - 1) / bestLimit << "\n\n";
+        }
+    }
+    return 0;
+}
+/*
+7 10
+1 2 30
+1 3 15
+1 4 10
+2 4 25
+2 5 60
+3 4 40
+3 6 20
+4 7 35
+5 7 20
+6 7 30
+1 7 99
+7 10
+1 2 30
+1 3 15
+1 4 10
+2 4 25
+2 5 60
+3 4 40
+3 6 20
+4 7 35
+5 7 20
+6 7 30
+1 7 99
+0 0
+
+solved with the coach in session
+
+ */
