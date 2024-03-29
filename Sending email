@@ -1,0 +1,84 @@
+#include <bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+const ll INF = 1e15;
+
+void dijkstra(ll src, vector<vector<pair<ll, ll>>>& adj, vector<ll>& dis)
+{
+    ll n = adj.size();
+    dis.assign(n, INF);
+    priority_queue<pair<ll, ll>> pq;
+    dis[src] = 0;
+    pq.push(make_pair(0, src));
+    while (!pq.empty())
+    {
+        ll d = -pq.top().first;
+        ll u = pq.top().second;
+        pq.pop();
+
+        if (d > dis[u]) continue;
+        for (auto& edge : adj[u])
+        {
+            ll v = edge.second, c = edge.first;
+            if (dis[u] + c < dis[v])
+            {
+                dis[v] = dis[u] + c;
+                pq.emplace(-dis[v], v);
+            }
+        }
+    }
+}
+
+
+int main()
+{
+    int t, cnt = 0;
+
+    cin >> t;
+
+    while(t--)
+    {
+        ll n, m, src, tar;
+        cin >> n >> m >> src >> tar;
+
+        vector<vector<pair<ll, ll>>> adj(n);
+
+        for (int i = 0; i < m; ++i)
+        {
+            int s, d, w;
+            cin >> s >> d >> w;
+            adj[s].emplace_back(w, d);
+            adj[d].emplace_back(w, s);
+        }
+
+        vector<ll> dist(n);
+
+        dijkstra(src, adj, dist);
+
+        if(dist[tar] == INF) cout << "Case #" << ++cnt << ": unreachable" << "\n";
+        else    cout << "Case #" << ++cnt << ": " << dist[tar] << "\n";
+    }
+
+
+    return 0;
+}
+/*
+3
+2 1 0 1
+0 1 100
+3 3 2 0
+0 1 100
+0 2 200
+1 2 50
+2 0 0 1
+
+2
+2 1 0 1
+0 1 100
+3 3 2 0
+0 1 100
+0 2 200
+1 2 50
+
+ */
