@@ -1,0 +1,85 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+const int N = 1000, INF = 1e9;
+int dist[N][N];
+bool visited[N][N];
+
+int dx[] = {-1, 0, 1, 0};
+int dy[] = {0, 1, 0, -1};
+
+bool isValid(int x, int y, int n, int m)
+{
+    return (x >= 0 && x < n && y >= 0 && y < m);
+}
+
+int dijkstra(vector<vector<int>>& grid, int n, int m)
+{
+    for(int i = 0; i < n; ++i)
+    {
+        for(int j = 0; j < m; ++j)
+        {
+            dist[i][j] = INF;
+            visited[i][j] = false;
+        }
+    }
+
+    priority_queue<pair<int, pair<int, int>>, vector<pair<int, pair<int, int>>>, greater<pair<int, pair<int, int>>>> pq;//c++ is stupid.
+
+    dist[0][0] = grid[0][0];
+
+    pq.push({dist[0][0], {0, 0}});
+
+    while(!pq.empty())
+    {
+        auto cur = pq.top();
+        pq.pop();
+        int x = cur.second.first;
+        int y = cur.second.second;
+        int cost = cur.first;
+
+        if(visited[x][y])   continue;
+
+        visited[x][y] = true;
+
+        for(int i = 0; i < 4; i++)
+        {
+            int nx = x + dx[i], ny = y + dy[i];
+            if(isValid(nx, ny, n, m) && dist[nx][ny] > cost + grid[nx][ny])
+            {
+                dist[nx][ny] = cost + grid[nx][ny];
+                pq.push({dist[nx][ny], {nx, ny}});
+            }
+        }
+    }
+    return dist[n-1][m-1];
+}
+
+int main()
+{
+    int t;
+    cin >> t;
+    while(t--)
+    {
+        int n, m;
+        cin >> n >> m;
+        vector<vector<int>> grid(n, vector<int>(m));
+        for(int i = 0; i < n; i++)
+            for(int j = 0; j < m; j++)  cin >> grid[i][j];
+
+        cout << dijkstra(grid, n, m) << "\n";
+    }
+    return 0;
+}
+/*
+2
+4
+5
+0 3 1 2 9
+7 3 4 9 9
+1 7 5 5 3
+2 3 4 2 5
+1
+6
+0 1 2 3 4 5
+ */
