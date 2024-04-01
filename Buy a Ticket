@@ -1,0 +1,62 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+const ll N = 2e5 + 9;
+
+vector<pair<ll,ll>> adj[N];
+ll dist[N], cities[N];
+bool vis[N];
+int n, m;
+
+void dijkstra()
+{
+    priority_queue<pair<ll,ll>, vector<pair<ll,ll>>, greater<pair<ll,ll>>> pq;
+    for(int i = 0; i < n; i++)  pq.push(make_pair(cities[i], i));
+
+    while(!pq.empty())
+    {
+        ll u = pq.top().second;
+        pq.pop();
+        if(vis[u]) continue;
+        vis[u] = true;
+        
+        for(auto i : adj[u])
+        {
+            ll v = i.first;
+            ll w = i.second;
+            if(dist[u] + w < dist[v])
+            {
+                dist[v] = dist[u] + w;
+                pq.emplace(dist[v], v);
+            }
+        }
+    }
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
+    cin >> n >> m;
+    for(int i = 0; i < m; i++)
+    {
+        ll u, v, w;
+        cin >> u >> v >> w;
+        u--; v--;
+        adj[u].emplace_back(v, 2 * w);
+        adj[v].emplace_back(u, 2 * w);
+    }
+    for(int i = 0; i < n; i++)
+    {
+        cin >> cities[i];
+        dist[i] = cities[i];
+    }
+    dijkstra();
+    
+    for(int i = 0; i < n; i++)  cout << dist[i] << " ";
+    cout << "\n";
+    
+    return 0;
+}
