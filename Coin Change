@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const ll N = 2e5 + 9;
+
+vector<ll> dp(7490, 0);
+ll coins[] = {1, 5, 10, 25, 50};
+
+void solve()
+{
+    dp[0] = 1;
+
+    for(int i = 0; i < 5; i++)
+        for(int j = coins[i]; j <= 7489; j++)
+            dp[j] += dp[j - coins[i]];
+
+
+}
+
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
+    solve();
+
+    int n;
+    while(cin >> n) cout << dp[n] << "\n";
+
+
+
+
+
+
+
+
+
+
+    
+    return 0;
+}
