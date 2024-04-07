@@ -1,0 +1,71 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const ll N = 2e5 + 9;
+
+vector<ll> dp(7490, 0);
+
+
+
+
+int solve(string s1, string s2)
+{
+    int m = s1.length(), n = s2.length();
+
+
+    vector<vector<int>> dp(m + 1);
+
+    for (int i = 0; i < m+1; ++i)
+    {
+        for (int j = 0; j < n+1; ++j)
+        {
+            dp[i].push_back(0);
+        }
+
+    }
+
+
+
+    for (int i = 1; i <= m; ++i)
+    {
+        for (int j = 1; j <= n; ++j)
+        {
+            if (s1[i - 1] == s2[j - 1])   dp[i][j] = dp[i - 1][j - 1] + 1;
+            else    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+        }
+    }
+
+
+    return dp[m][n];
+}
+
+int main()
+
+{
+    string s1, s2;
+    
+
+    while(getline(cin, s1), getline(cin, s2))  cout << solve(s1, s2) << "\n";
+
+    return 0;
+}
+/*
+a
+a
+bcacbcabbaccbab
+bccabccbbabacbc
+a1b2c3d4e
+zz1yy2xx3ww4vv
+abcdgh
+aedfhr
+abcdefghijklmnopqrstuvwxyz
+a0b0c0d0e0f0g0h0i0j0k0l0m0n0o0p0q0r0s0t0u0v0w0x0y0z0
+abcdefghijklmnzyxwvutsrqpo
+opqrstuvwxyzabcdefghijklmn
+
+11
+4
+3
+26
+14
+ */
