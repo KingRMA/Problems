@@ -1,0 +1,62 @@
+#include <bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+
+
+
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);  cout.tie(NULL);
+
+
+   string s;
+   cin >> s;
+   int n = s.size();
+
+   map<char, int> freq;
+   priority_queue<pair<int, char>, vector<pair<int, char>>, greater<pair<int, char>>> pq;
+
+    for (auto i: s) freq[i]++;
+
+    for(auto i : freq)
+    {
+        pair<int, char> temp = {i.second, i.first};
+        pq.push(temp);
+    }
+
+    int res = 0;
+
+    for (int i = 0; i < n; ++i)
+    {
+        if(pq.size() <= 2) break;
+        res += pq.top().first;
+//        cout << pq.top().second << " " << pq.top().first << "\n";
+        pq.pop();
+    }
+
+    cout << res << "\n";
+
+
+
+
+
+
+    return 0;
+}
+/*
+3 5
+2 SAFE
+4 SAFE
+3 SAFE
+
+4 3
+2 BROKEN
+2 BROKEN
+1 SAFE
+3 BROKEN
+
+
+ */
