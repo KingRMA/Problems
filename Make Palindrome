@@ -1,0 +1,77 @@
+#include <bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+int n;
+string firstPart, secondPart;
+int solve(int i, int j, string &s, vector<vector<int>>&dp)
+{
+    if(i > j) return 0;
+    if(dp[i][j] != -1) return dp[i][j];
+
+    if(s[i] == s[j]) return dp[i][j] = solve(i+1, j-1, s, dp);
+
+    int newFront = solve(i, j-1, s, dp) + 1;
+    int newBack = solve(i+1, j, s, dp)+1;
+
+    return dp[i][j] = min(newBack, newFront);
+}
+void printMid(int i, int j, string &s, vector<vector<int>>&dp)
+{
+    if(i > j) return;
+    if(s[i] == s[j])
+    {
+        firstPart.push_back(s[i]);
+        if(i != j) secondPart = s[j] + secondPart;
+        return printMid(i+1, j-1, s, dp);
+    }
+
+    int select = solve(i, j, s, dp) ;
+    int newBack = solve(i+1, j, s, dp)+1;
+
+    if(select == newBack)
+    {
+        firstPart.push_back(s[i]);
+        secondPart=s[i]+secondPart;
+        printMid(i+1, j, s, dp);
+    }
+    else
+    {
+        firstPart.push_back(s[j]);
+        secondPart=s[j]+secondPart;
+        printMid(i, j-1, s, dp);
+    }
+}
+
+
+int main() 
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
+    string s;
+    while(cin >> s)
+    {
+        n = (int) s.size();
+        vector<vector<int>> dp(n, vector<int>(n, -1));
+        cout << solve(0, n - 1, s, dp) << " ";
+        
+        printMid(0, n - 1, s, dp);
+        
+        cout << firstPart + secondPart << '\n';
+
+        firstPart = "";
+        secondPart = "";
+    }
+    return 0;
+}
+/*
+abcd
+aaaa
+abc
+aab
+abababaabababa
+pqrsabcdpqrs
+
+ */
+//solved with the coach in the session
