@@ -1,0 +1,58 @@
+#include <bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+
+
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);  cout.tie(NULL);
+
+
+    int n, k, INF = 1e9+9;
+    cin >> n >> k;
+
+    vector<int> good, bad;
+
+    int maxSafe = -1, minBroken = INF;
+    for (int i = 0; i < n; ++i)
+    {
+        string temp;
+        int tempInt;
+        cin >> tempInt >> temp;
+
+        if(temp == "SAFE") good.push_back(tempInt), maxSafe = max(tempInt, maxSafe);
+        else bad.push_back(tempInt), minBroken = min(tempInt, minBroken);
+    }
+
+
+
+    if(maxSafe == -1) cout << 2 << " ";
+    else cout << maxSafe + 1 << " ";
+
+    if(minBroken == INF) cout << k-1 << "\n";
+    else cout << minBroken - 1 << "\n";
+
+
+
+
+
+
+    return 0;
+}
+/*
+3 5
+2 SAFE
+4 SAFE
+3 SAFE
+ 
+4 3
+2 BROKEN
+2 BROKEN
+1 SAFE
+3 BROKEN
+
+
+ */
