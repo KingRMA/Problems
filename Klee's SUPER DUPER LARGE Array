@@ -1,0 +1,62 @@
+#include <bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
+    ll t;
+    cin >> t;
+
+    while (t--)
+    {
+        ll n, k;
+        cin >> n >> k;
+
+        ll total = n * k + (n - 1) * n / 2;
+
+        auto calc_diff = [&](ll i) -> ll {
+            ll prefixSum = (i * (2 * k + (i - 1))) / 2; 
+            ll suffixSum = total - prefixSum; 
+            return abs(prefixSum - suffixSum);
+        };
+
+     
+        ll l = 1, r = n;
+        ll res = LLONG_MAX;
+
+        while (l <= r) 
+        {
+            ll mid = l + (r - l) / 2;
+
+            ll midDiff = calc_diff(mid);
+            res = min(res, midDiff);
+
+      
+            if (mid > 1) 
+            {
+                ll leftDiff = calc_diff(mid - 1);
+                if (leftDiff < midDiff) {
+                    r = mid - 1;
+                    continue;
+                }
+            }
+
+            if (mid < n)
+            {
+                ll rightDiff = calc_diff(mid + 1);
+                if (rightDiff < midDiff) {
+                    l = mid + 1;
+                    continue;
+                }
+            }
+
+            break;
+        }
+
+        cout << res << "\n";
+    }
+
+    return 0;
+}
