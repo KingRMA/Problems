@@ -1,0 +1,62 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+
+
+int main() 
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int t;
+    cin >> t;
+    while(t--)
+    {
+        ll x;
+        cin >> x;
+
+        if(x < 3)
+        {
+            cout << -1 << "\n";
+            continue;
+        }
+
+        if((x & (x - 1)) == 0)
+        {
+            cout << -1 << "\n";
+            continue;
+        }
+
+
+        bool found = false;
+        ll limit = (ll) floor(sqrt(2.0 * x)) + 2;
+
+        for(ll n = 2; n <= limit; n++) 
+        {
+            ll sum = n * (n - 1) / 2;
+            if(sum >= x) 
+                break;
+            
+            ll diff = x - sum;
+            if(diff % n == 0) 
+            {
+                ll l = diff / n;
+                if(l > 0) 
+                {
+                    ll r = l + n - 1;
+                    if(r < x) 
+                    {
+                        cout << l << " " << r << "\n";
+                        found = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if(!found)
+            cout << -1 << "\n";
+
+    }
+    return 0;
+}
